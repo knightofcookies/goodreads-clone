@@ -10,9 +10,14 @@ loginRouter.post("/", async (request, response) => {
   const passwordCorrect =
     user === null ? false : await bcrypt.compare(password, user.passwordHash);
 
-  if (!(user && passwordCorrect)) {
+  if (!user) {
     return response.status(401).json({
-      error: "invalid username or password",
+      error: "invalid username",
+    });
+  }
+  if (!passwordCorrect) {
+    return response.status(401).json({
+      error: "invalid password",
     });
   }
 
@@ -25,11 +30,7 @@ loginRouter.post("/", async (request, response) => {
     expiresIn: 60 * 60,
   });
 
-  console.log(user);
-
-  response
-    .status(200)
-    .send({ token, username: user.username, name: user.name, id: user.id });
+  response.status(200).send({ token, username: user.username, id: user.id });
 });
 
 module.exports = loginRouter;

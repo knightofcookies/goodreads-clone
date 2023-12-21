@@ -7,7 +7,7 @@ usersRouter.post("/", async (request, response) => {
 
   if (username.length < 3 || password.length < 3) {
     response.status(400).json({
-      error: "username and password should be at least 3 characters long",
+      error: "username and password should each be at least 3 characters long",
     });
   }
 
