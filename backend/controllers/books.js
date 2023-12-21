@@ -7,8 +7,22 @@ booksRouter.get("/", async (req, res) => {
   response.json(books);
 });
 
-booksRouter.post("/", async (req, res) => {
-  // TODO
+booksRouter.post("/:id", async (req, res) => {
+  const id = req.params.id;
+  const user = request.user;
+
+  const book = await Book.findById(id);
+
+  if (!book) {
+    return res.status(404).json({
+      error: `book with id ${id} not found`,
+    });
+  }
+
+  user.books = user.books.concat(book._id);
+  await user.save();
+
+  response.status(201).end();
 });
 
 module.exports = booksRouter;

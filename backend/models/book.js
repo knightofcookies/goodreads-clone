@@ -9,13 +9,11 @@ const bookSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  year: {
-    type: Number,
-    required: true,
+  contributor: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Librarian",
   }
 });
-
-// TODO : Expand bookSchema
 
 bookSchema.set("toJSON", {
   transform: (document, returnedObject) => {

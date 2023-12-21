@@ -69,7 +69,6 @@ librariansRouter.get("/", async (request, response) => {
   const librarians = await Librarian.find({}).populate("books", {
     title: 1,
     author: 1,
-    year: 1,
   });
   response.json(librarians);
 });

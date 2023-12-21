@@ -11,7 +11,7 @@ const librarianSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  books: [ // Contributions
+  contributions: [
     {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Book",
