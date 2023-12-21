@@ -10,13 +10,9 @@ const bookSchema = new mongoose.Schema({
     required: true,
   },
   year: {
-    type: String,
+    type: Number,
     required: true,
-  },
-  isbn: {
-    type: String,
-    required: false,
-  },
+  }
 });
 
 // TODO : Expand bookSchema

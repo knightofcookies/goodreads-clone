@@ -6,3 +6,4 @@ The following environment variables need to be defined for the backend to run.
 - PORT
 - MONGODB_URI
 - TEST_MONGODB_URI
+- SECRET
