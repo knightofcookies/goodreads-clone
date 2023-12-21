@@ -6,17 +6,23 @@ managementRouter.post("/", async (req, res) => {
   const { title, author } = req.body;
   const librarian = req.librarian;
 
+  if (!librarian) {
+    return res.status(401).json({
+      error: `you must be logged in as a librarian`,
+    });
+  }
+
   const book = new Book({
     title,
     author,
-    contributor: librarian,
+    contributor: librarian._id,
   });
 
   const savedBook = await book.save();
   librarian.contributions = librarian.contributions.concat(savedBook._id);
   await librarian.save();
 
-  response.json(savedBook);
+  res.json(savedBook);
 });
 
 managementRouter.delete("/:id", async (req, res) => {
@@ -28,12 +34,18 @@ managementRouter.delete("/:id", async (req, res) => {
       error: `book with id ${id} not found`,
     });
   }
+  if (!req.librarian) {
+    return res.status(401).json({
+      error: `you must be logged in as a librarian`,
+    });
+  }
+
 
   const librarian = await Librarian.findById(book.contributor);
   librarian.contributions = librarian.contributions.filter((b) => b !== id);
   await librarian.save();
 
-  response.status(204).end();
+  res.status(204).end();
 });
 
 module.exports = managementRouter;

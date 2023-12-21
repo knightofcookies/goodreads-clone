@@ -66,7 +66,7 @@ librariansRouter.post("/signup", async (request, response) => {
 });
 
 librariansRouter.get("/", async (request, response) => {
-  const librarians = await Librarian.find({}).populate("books", {
+  const librarians = await Librarian.find({}).populate("contributions", {
     title: 1,
     author: 1,
   });
