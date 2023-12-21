@@ -1,5 +1,6 @@
 const managementRouter = require("express").Router();
 const Book = require("../models/book");
+const Librarian = require("../models/librarian");
 
 managementRouter.post("/", async (req, res) => {
   const { title, author } = req.body;
@@ -20,7 +21,6 @@ managementRouter.post("/", async (req, res) => {
 
 managementRouter.delete("/:id", async (req, res) => {
   const id = req.params.id;
-  const librarian = req.librarian;
 
   const book = await Book.findByIdAndDelete(id);
   if (!book) {
@@ -29,6 +29,7 @@ managementRouter.delete("/:id", async (req, res) => {
     });
   }
 
+  const librarian = await Librarian.findById(book.contributor);
   librarian.contributions = librarian.contributions.filter((b) => b !== id);
   await librarian.save();
 
