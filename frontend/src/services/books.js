@@ -3,15 +3,15 @@ import axios from "axios";
 const baseUrl = "/api/books";
 
 let token = null;
+let config = null;
 
 const setToken = (newToken) => {
   token = `Bearer ${newToken}`;
-};
-
-const config = {
-  headers: {
-    Authorization: token,
-  },
+  config = {
+    headers: {
+      Authorization: token,
+    },
+  };  
 };
 
 const getAll = async () => {

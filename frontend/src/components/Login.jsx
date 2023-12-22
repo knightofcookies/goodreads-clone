@@ -1,52 +1,105 @@
-import { useState } from "react";
-import loginService from "../services/login";
+import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import { Container } from "@mui/material";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import loginService from "../services/login";
 
-const Login = ({ user, setUser }) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+// TODO Add error handling
 
-  const handleLogin = (event) => {
+export default function Login({ user, setUser }) {
+  const handleSubmit = (event) => {
     event.preventDefault();
+    const data = new FormData(event.currentTarget);
+    const username = data.get("username");
+    const password = data.get("password");
     const credentials = {
       username,
       password,
     };
     loginService
       .login(credentials)
-      .then(user => {
+      .then((user) => {
         setUser(user);
-        window.localStorage.setItem("loggedGoodreadsUser", JSON.stringify(user));
+        window.localStorage.setItem(
+          "loggedGoodreadsUser",
+          JSON.stringify(user)
+        );
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   };
 
-  if(user) {
-    return (
-      <div>
-        <p>Logged in as <b>user.username</b></p>
-      </div>
-    );
+  if (user) {
+    return null;
+    // return (
+    //   <Typography component="p" variant="overline">
+    //     Logged in as {user.username}
+    //   </Typography>
+    // );
   }
 
   return (
-    <Container maxWidth="sm">
-      <h2>Login</h2>
-      <form onSubmit={handleLogin}>
-        <label htmlFor="username">Username </label>
-        <input type="text" id="username" onChange={(event) => setUsername(event.target.value)}/>
-        <br />
-        <label htmlFor="password">Password </label>
-        <input type="password" id="password" onChange={(event) => setPassword(event.target.value)}/>
-        <br />
-        <Button type="submit" variant="contained">Submit</Button>
-        <Button type="reset" variant="outlined">Reset</Button>
-        </form>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <Box
+        sx={{
+          marginTop: 8,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Login
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            id="username"
+            label="Username"
+            name="username"
+            autoComplete="username"
+            autoFocus
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
+            autoComplete="current-password"
+          />
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Login
+          </Button>
+          <Grid container>
+            <Grid item>
+              <Link href="#" variant="body2">
+                {"Don't have an account? Sign Up" /* TODO Add signup */ }
+              </Link>
+            </Grid>
+          </Grid>
+        </Box>
+      </Box>
     </Container>
   );
-};
-
-export default Login;
+}
