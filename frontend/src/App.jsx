@@ -1,9 +1,7 @@
-import AppBar from './components/AppBar'
-
 function App() {
   return (
     <>
-    <AppBar />
+      hi
     </>
   )
 }
