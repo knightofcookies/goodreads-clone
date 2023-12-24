@@ -9,10 +9,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import loginService from "../services/login";
+import { useContext } from "react";
+import UserContext from "../contexts/UserContext";
 
 // TODO Add error handling
 
-export default function Login({ user, setUser }) {
+export default function Login() {
+  const [user, userDispatch] = useContext(UserContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -25,7 +28,10 @@ export default function Login({ user, setUser }) {
     loginService
       .login(credentials)
       .then((user) => {
-        setUser(user);
+        userDispatch({
+          type: "SET_USER",
+          payload: user,
+        });
         window.localStorage.setItem(
           "loggedGoodreadsUser",
           JSON.stringify(user)
@@ -94,7 +100,7 @@ export default function Login({ user, setUser }) {
           <Grid container>
             <Grid item>
               <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up" /* TODO Add signup */ }
+                {"Don't have an account? Sign Up" /* TODO Add signup */}
               </Link>
             </Grid>
           </Grid>

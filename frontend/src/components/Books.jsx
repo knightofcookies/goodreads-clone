@@ -1,43 +1,50 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import booksService from "../services/books";
+import UserContext from "../contexts/UserContext";
 import Book from "./Book";
 import Container from "@mui/material/Container";
-import Typography from "@mui/material/Typography";
-import { blue } from "@mui/material/colors";
-import Paper from "@mui/material/Paper";
+import { redirect } from "react-router-dom";
 
 // TODO : Add error notifications
 
-const Books = ({ user }) => {
+const Books = () => {
   const [books, setBooks] = useState([]);
+  const [user, userDispatch] = useContext(UserContext);
 
   useEffect(() => {
     if (!user) {
       return;
     }
-    try {
-      booksService.setToken(user.token);
-      booksService.getAll().then((returnedBooks) => {
+    booksService.setToken(user.token);
+    booksService
+      .getAll()
+      .then((returnedBooks) => {
         if (returnedBooks) {
           setBooks(returnedBooks);
         }
+      })
+      .catch((error) => {
+        if (error.response) {
+          if (error.response.status === 401) {
+            window.localStorage.removeItem("loggedGoodreadsUser");
+            userDispatch({
+              type: "RESET_USER",
+            });
+          }
+        }
       });
-    } catch (error) {
-      console.log(error);
-    }
-  }, [user]);
+  }, [user, userDispatch]);
+
+  if (!user) {
+    redirect("/login"); // DEBUG
+  }
 
   if (books.length === 0) {
     return null;
   }
 
   return (
-    <Container sx={{ p: 1, backgroundColor: blue[600] }}>
-      <Paper sx={{ p: 1, backgroundColor: blue.A200 }} elevation={12}>
-        <Typography variant="h5" component="h3" color={"white"} gutterBottom>
-          All books on Goodreads
-        </Typography>
-      </Paper>
+    <Container sx={{ p: 1 }}>
       {books.map((book) => (
         <Book key={book.id} book={book} />
       ))}

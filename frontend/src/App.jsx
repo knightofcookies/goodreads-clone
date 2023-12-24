@@ -1,24 +1,26 @@
-import { useEffect, useState } from "react";
-import Books from "./components/Books";
-import Login from "./components/Login";
+import { useEffect, useContext } from "react";
+import UserContext from "./contexts/UserContext";
 import AppBar from "./components/AppBar";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [, userDispatch] = useContext(UserContext);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedGoodreadsUser");
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON);
-      setUser(user);
+      userDispatch({
+        type: "SET_USER",
+        payload: user,
+      });
     }
-  }, []);
+  }, [userDispatch]);
 
   return (
     <>
-      <AppBar/>
-      <Login user={user} setUser={setUser} />
-      <Books user={user} />
+      <AppBar />
+      <Outlet />
     </>
   );
 }
