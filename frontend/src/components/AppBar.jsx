@@ -26,12 +26,12 @@ const pages = [
     endpoint: "users",
   },
   {
-    title: "Librarians",
-    endpoint: "librarians",
+    title: "Contributors",
+    endpoint: "contributors",
   },
 ];
 
-function ResponsiveAppBar() {
+const ResponsiveAppBar = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
@@ -202,5 +202,5 @@ function ResponsiveAppBar() {
       </Container>
     </AppBar>
   );
-}
+};
 export default ResponsiveAppBar;

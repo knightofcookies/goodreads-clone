@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
-import librariansService from "../services/librarians";
-import Librarian from "./Librarian";
+import contributorsService from "../services/contributors";
+import Contributor from "./Contributor";
 import AppBar from "./AppBar";
 import Container from "@mui/material/Container";
 import { useNavigate, useLoaderData } from "react-router-dom";
+import CustomThemeProvider from "./CustomThemeProvider";
 
 // TODO : Add error notifications
 
-const Librarians = () => {
-  const [librarians, setLibrarians] = useState([]);
+const Contributors = () => {
+  const [contributors, setContributors] = useState([]);
   const { user } = useLoaderData();
   const navigate = useNavigate();
 
@@ -16,11 +17,11 @@ const Librarians = () => {
     if (!user) {
       return;
     }
-    librariansService
+    contributorsService
       .getAll()
-      .then((returnedLibrarians) => {
-        if (returnedLibrarians) {
-          setLibrarians(returnedLibrarians);
+      .then((returnedContributors) => {
+        if (returnedContributors) {
+          setContributors(returnedContributors);
         }
       })
       .catch((error) => {
@@ -33,20 +34,20 @@ const Librarians = () => {
       });
   }, [user, navigate]);
 
-  if (librarians.length === 0) {
+  if (contributors.length === 0) {
     return null;
   }
 
   return (
-    <>
+    <CustomThemeProvider>
       <AppBar />
       <Container sx={{ p: 1 }}>
-        {librarians.map((librarian) => (
-          <Librarian key={librarian.id} librarian={librarian} />
+        {contributors.map((contributor) => (
+          <Contributor key={contributor.id} contributor={contributor} />
         ))}
       </Container>
-    </>
+    </CustomThemeProvider>
   );
 };
 
-export default Librarians;
+export default Contributors;

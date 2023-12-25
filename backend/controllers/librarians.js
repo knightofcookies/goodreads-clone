@@ -34,7 +34,7 @@ librariansRouter.post("/login", async (request, response) => {
 
   response
     .status(200)
-    .send({ token, username: librarian.username, id: librarian._id });
+    .send({ token, username: librarian.username, id: librarian._id, type: "contributor" });
 });
 
 librariansRouter.post("/signup", async (request, response) => {

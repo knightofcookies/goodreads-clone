@@ -4,6 +4,7 @@ import User from "./User";
 import AppBar from "./AppBar";
 import Container from "@mui/material/Container";
 import { useNavigate, useLoaderData } from "react-router-dom";
+import CustomThemeProvider from "./CustomThemeProvider";
 
 // TODO : Add error notifications
 
@@ -38,14 +39,14 @@ const Users = () => {
   }
 
   return (
-    <>
+    <CustomThemeProvider>
       <AppBar />
       <Container sx={{ p: 1 }}>
         {users.map((user) => (
           <User key={user.id} user={user} />
         ))}
       </Container>
-    </>
+    </CustomThemeProvider>
   );
 };
 

@@ -7,7 +7,10 @@ import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
-import { Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import CustomThemeProvider from "./CustomThemeProvider";
+import Divider from "@mui/material/Divider";
 
 // TODO : Add error notifications
 
@@ -142,9 +145,13 @@ const Books = () => {
   }, [user, navigate]);
 
   return (
-    <>
+    <CustomThemeProvider>
       <AppBar />
       <Container sx={{ p: 1 }}>
+        <Typography variant="h6">
+          Cumulative List
+        </Typography>
+        <Divider />
         <SelectedListItem
           books={books}
           addBookToShelf={addBookToShelf}
@@ -152,7 +159,7 @@ const Books = () => {
           userBooks={userBooks}
         />
       </Container>
-    </>
+    </CustomThemeProvider>
   );
 };
 

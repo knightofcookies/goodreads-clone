@@ -1,11 +1,12 @@
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import Box from '@mui/material/Box';
-import List from '@mui/material/List';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
+import Divider from "@mui/material/Divider";
 
 const SelectedListItem = ({ contributions }) => {
   const [selectedId, setSelectedId] = useState(0);
@@ -14,14 +15,14 @@ const SelectedListItem = ({ contributions }) => {
     setSelectedId(id);
   };
 
-  if(!contributions) {
+  if (!contributions) {
     return null;
   }
 
   return (
-    <Box sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+    <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <List component="nav" aria-label="contributions">
-        {contributions.map(book => {
+        {contributions.map((book) => {
           return (
             <ListItemButton
               key={book.id}
@@ -35,11 +36,10 @@ const SelectedListItem = ({ contributions }) => {
       </List>
     </Box>
   );
-}
+};
 
-const Librarian = ({ librarian }) => {
-
-  if(!librarian) {
+const Contributor = ({ contributor }) => {
+  if (!contributor) {
     return null;
   }
 
@@ -47,12 +47,13 @@ const Librarian = ({ librarian }) => {
     <Container sx={{ p: 1 }}>
       <Paper variant="outlined">
         <Typography component="h6" variant="h6" sx={{ p: 1 }}>
-          {librarian.username}
+          Contributor <b>{contributor.username}</b>
         </Typography>
-        <SelectedListItem contributions={librarian.contributions} />
+        <Divider />
+        <SelectedListItem contributions={contributor.contributions} />
       </Paper>
     </Container>
   );
 };
 
-export default Librarian;
+export default Contributor;

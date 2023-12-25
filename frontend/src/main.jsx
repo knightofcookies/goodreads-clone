@@ -9,7 +9,7 @@ import userLoader from "./utils/userLoader.js";
 import loginLoader from "./utils/loginLoader.js";
 import Login from "./components/Login.jsx";
 import Users from "./components/Users.jsx";
-import Librarians from "./components/Librarians.jsx";
+import Contributors from "./components/Contributors.jsx";
 import MyBooks from "./components/MyBooks.jsx";
 import SignUp from "./components/SignUp.jsx";
 
@@ -33,8 +33,8 @@ const router = createBrowserRouter([
     loader: userLoader,
   },
   {
-    path: "/librarians",
-    element: <Librarians />,
+    path: "/contributors",
+    element: <Contributors />,
     errorElement: <ErrorPage />,
     loader: userLoader,
   },

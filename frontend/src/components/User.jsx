@@ -6,6 +6,7 @@ import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import { useState } from "react";
+import Divider from "@mui/material/Divider";
 
 const SelectedListItem = ({ books }) => {
   const [selectedId, setSelectedId] = useState(0);
@@ -46,8 +47,9 @@ const User = ({ user }) => {
     <Container sx={{ p: 1 }}>
       <Paper variant="outlined">
         <Typography component="h6" variant="h6" sx={{ p: 1 }}>
-          {user.username}
+          User <b>{user.username}</b>
         </Typography>
+        <Divider />
         <SelectedListItem books={user.books} />
       </Paper>
     </Container>
