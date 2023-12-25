@@ -11,6 +11,7 @@ import Login from "./components/Login.jsx";
 import Users from "./components/Users.jsx";
 import Librarians from "./components/Librarians.jsx";
 import MyBooks from "./components/MyBooks.jsx";
+import SignUp from "./components/SignUp.jsx";
 
 const router = createBrowserRouter([
   {
@@ -38,16 +39,22 @@ const router = createBrowserRouter([
     loader: userLoader,
   },
   {
+    path: "/mybooks",
+    element: <MyBooks />,
+    errorElement: <ErrorPage />,
+    loader: userLoader,
+  },
+  {
     path: "/login",
     element: <Login />,
     errorElement: <ErrorPage />,
     loader: loginLoader,
   },
   {
-    path: "/mybooks",
-    element: <MyBooks />,
+    path: "/signup",
+    element: <SignUp />,
     errorElement: <ErrorPage />,
-    loader: userLoader,
+    loader: loginLoader,
   },
 ]);
 

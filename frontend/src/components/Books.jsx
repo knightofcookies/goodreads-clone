@@ -19,13 +19,21 @@ const BookActionButton = ({
 }) => {
   if (!userBooks.find((b) => b === id)) {
     return (
-      <Button variant="contained" onClick={() => addBookToShelf(id)}>
+      <Button
+        variant="contained"
+        color="primary"
+        onClick={() => addBookToShelf(id)}
+      >
         Add
       </Button>
     );
   } else {
     return (
-      <Button variant="contained" onClick={() => removeBookFromShelf(id)}>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => removeBookFromShelf(id)}
+      >
         Remove
       </Button>
     );
@@ -85,7 +93,10 @@ const Books = () => {
       await booksService.addToShelf(id);
       let newUser = user;
       newUser.books = user.books.concat(id);
-      window.localStorage.setItem("loggedGoodreadsUser", JSON.stringify(newUser));
+      window.localStorage.setItem(
+        "loggedGoodreadsUser",
+        JSON.stringify(newUser)
+      );
       setUserBooks(newUser.books);
     } catch (exception) {
       console.error(exception); // TODO Handle errors
@@ -98,7 +109,10 @@ const Books = () => {
       await booksService.removeFromShelf(id);
       let newUser = user;
       newUser.books = user.books.filter((b) => b !== id);
-      window.localStorage.setItem("loggedGoodreadsUser", JSON.stringify(newUser));
+      window.localStorage.setItem(
+        "loggedGoodreadsUser",
+        JSON.stringify(newUser)
+      );
       setUserBooks(newUser.books);
     } catch (exception) {
       console.error(exception); // TODO Handle errors

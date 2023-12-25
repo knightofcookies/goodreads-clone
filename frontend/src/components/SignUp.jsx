@@ -8,12 +8,12 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import loginService from "../services/login";
+import userService from "../services/users";
 import { useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 
-export default function Login() {
+export default function SignUp() {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -22,8 +22,16 @@ export default function Login() {
     const data = new FormData(event.currentTarget);
     const username = data.get("username");
     const password = data.get("password");
-    if (!username || !password) {
-      setErrorMessage("Missing username or password");
+    const confirmPassword = data.get("confirm-password");
+    if (!username || !password || !confirmPassword) {
+      setErrorMessage("Please fill all the fields.");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return;
+    }
+    if (password !== confirmPassword) {
+      setErrorMessage("Passwords do not match");
       setTimeout(() => {
         setErrorMessage("");
       }, 5000);
@@ -33,8 +41,8 @@ export default function Login() {
       username,
       password,
     };
-    loginService
-      .login(credentials)
+    userService
+      .createUser(credentials)
       .then((user) => {
         window.localStorage.setItem(
           "loggedGoodreadsUser",
@@ -51,7 +59,7 @@ export default function Login() {
           }, 5000);
         } else {
           setErrorMessage(
-            "Error logging in : Please check the console for more details"
+            "Error signing up : Please check the console for more details"
           );
           console.error(error);
           setTimeout(() => {
@@ -77,7 +85,7 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Login
+          Sign Up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
@@ -87,7 +95,6 @@ export default function Login() {
             id="username"
             label="Username"
             name="username"
-            autoComplete="username"
             autoFocus
           />
           <TextField
@@ -98,7 +105,17 @@ export default function Login() {
             label="Password"
             type="password"
             id="password"
-            autoComplete="current-password"
+            autoComplete="new-password"
+          />
+          <TextField
+            margin="normal"
+            required
+            fullWidth
+            name="password"
+            label="Confirm Password"
+            type="password"
+            id="confirm-password"
+            autoComplete="new-password"
           />
           <Button
             type="submit"
@@ -106,17 +123,12 @@ export default function Login() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Login
+            Sign Up
           </Button>
-          <Grid container>
-            {/* <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid> */}
-            <Grid item xs>
-              <Link component={RouterLink} to="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
+          <Grid container justifyContent="flex-end">
+            <Grid item>
+              <Link component={RouterLink} to="/login" variant="body2">
+                {"Have an account? Login" /* TODO Add login */}
               </Link>
             </Grid>
           </Grid>
