@@ -6,18 +6,28 @@ import { UserContextProvider } from "./contexts/UserContext.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage.jsx";
 import Books from "./components/Books.jsx";
+import userLoader from "./utils/userLoader.js";
+import loginLoader from "./utils/loginLoader.js";
+import Login from "./components/Login.jsx";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
-    children: [
-      {
-        path: "/books",
-        element: <Books />,
-      },
-    ],
+    loader: userLoader,
+  },
+  {
+    path: "/books",
+    element: <Books />,
+    errorElement: <ErrorPage />,
+    loader: userLoader,
+  },
+  {
+    path: "/login",
+    element: <Login />,
+    errorElement: <ErrorPage />,
+    loader: loginLoader,
   },
 ]);
 

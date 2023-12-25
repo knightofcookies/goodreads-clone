@@ -2,6 +2,7 @@ import { useEffect, useState, useContext } from "react";
 import booksService from "../services/books";
 import UserContext from "../contexts/UserContext";
 import Book from "./Book";
+import AppBar from "./AppBar";
 import Container from "@mui/material/Container";
 import { redirect } from "react-router-dom";
 
@@ -44,11 +45,14 @@ const Books = () => {
   }
 
   return (
-    <Container sx={{ p: 1 }}>
-      {books.map((book) => (
-        <Book key={book.id} book={book} />
-      ))}
-    </Container>
+    <>
+      <AppBar />
+      <Container sx={{ p: 1 }}>
+        {books.map((book) => (
+          <Book key={book.id} book={book} />
+        ))}
+      </Container>
+    </>
   );
 };
 

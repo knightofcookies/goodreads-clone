@@ -11,11 +11,13 @@ import Container from "@mui/material/Container";
 import loginService from "../services/login";
 import { useContext } from "react";
 import UserContext from "../contexts/UserContext";
+import { useLoaderData } from "react-router-dom";
 
 // TODO Add error handling
 
 export default function Login() {
-  const [user, userDispatch] = useContext(UserContext);
+  const { user } = useLoaderData();
+  const [, userDispatch] = useContext(UserContext);
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -42,13 +44,8 @@ export default function Login() {
       });
   };
 
-  if (user) {
+  if (user) { // Should this be removed?
     return null;
-    // return (
-    //   <Typography component="p" variant="overline">
-    //     Logged in as {user.username}
-    //   </Typography>
-    // );
   }
 
   return (

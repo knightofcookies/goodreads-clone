@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import { blue } from "@mui/material/colors";
-import { useRouteError } from "react-router-dom";
+import { useRouteError, Link as RouterLink } from "react-router-dom";
 
 const primary = blue[500];
 
@@ -23,10 +23,10 @@ export default function ErrorPage() {
       <Typography variant="h6" style={{ color: "white" }}>
         Sorry, an unexpected error has occurred.
       </Typography>
-      <Typography variant="subtitle" style={{ color: "white" }}>
-        {error.statusText || error.message}
+      <Typography variant="" style={{ color: "white", margin: 15 }}>
+        Error : {error.statusText || error.message}
       </Typography>
-      <Button variant="contained">Back Home</Button>
+      <Button variant="contained" component={RouterLink} to="/  ">Home</Button>
     </Box>
   );
 }
