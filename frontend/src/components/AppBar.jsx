@@ -14,6 +14,8 @@ import MenuItem from "@mui/material/MenuItem";
 import BookIcon from "@mui/icons-material/Book";
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
+import UserContext from "../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const pages = [
   {
@@ -30,11 +32,13 @@ const pages = [
   },
 ];
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
+// const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const navigate = useNavigate();
+  const [, userDispatch] = React.useContext(UserContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -50,6 +54,27 @@ function ResponsiveAppBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const handleLogout = () => {
+    window.localStorage.removeItem("loggedGoodreadsUser");
+    userDispatch({
+      type: "RESET_USER",
+    });
+    navigate("/", { replace: true });
+  };
+
+  const dummyHandler = () => {};
+
+  const settings = [
+    {
+      title: "Profile",
+      handler: dummyHandler,
+    },
+    {
+      title: "Logout",
+      handler: handleLogout,
+    },
+  ];
 
   return (
     <AppBar position="static">
@@ -105,7 +130,13 @@ function ResponsiveAppBar() {
             >
               {pages.map((page) => (
                 <MenuItem key={page.endpoint} onClick={handleCloseNavMenu}>
-                  <Link textAlign="center" component={RouterLink} to={`/${page.endpoint}`}>{page.title}</Link>
+                  <Link
+                    textAlign="center"
+                    component={RouterLink}
+                    to={`/${page.endpoint}`}
+                  >
+                    {page.title}
+                  </Link>
                 </MenuItem>
               ))}
             </Menu>
@@ -166,8 +197,8 @@ function ResponsiveAppBar() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem key={setting.title} onClick={() => setting.handler()}>
+                  <Typography textAlign="center">{setting.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>

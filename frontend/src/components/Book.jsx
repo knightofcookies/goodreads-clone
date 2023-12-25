@@ -3,6 +3,9 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
 const Book = ({ book }) => {
+
+  // TODO Add ability to add books to personal bookshelf
+
   return (
     <Container sx={{ p: 1 }}>
       <Paper variant="outlined">

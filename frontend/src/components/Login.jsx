@@ -9,20 +9,29 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import loginService from "../services/login";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import UserContext from "../contexts/UserContext";
-import { useLoaderData } from "react-router-dom";
-
-// TODO Add error handling
+import { useLoaderData, useNavigate } from "react-router-dom";
+import ErrorMessage from "./ErrorMessage";
 
 export default function Login() {
   const { user } = useLoaderData();
   const [, userDispatch] = useContext(UserContext);
+  const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const username = data.get("username");
     const password = data.get("password");
+    if (!username || !password) {
+      setErrorMessage("Missing username or password");
+      setTimeout(() => {
+        setErrorMessage("");
+      }, 5000);
+      return;
+    }
     const credentials = {
       username,
       password,
@@ -38,19 +47,36 @@ export default function Login() {
           "loggedGoodreadsUser",
           JSON.stringify(user)
         );
+        setErrorMessage("");
+        navigate("/", { replace: true });
       })
       .catch((error) => {
-        console.error(error);
+        if (error.response.data.error) {
+          setErrorMessage(error.response.data.error);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 5000);
+        } else {
+          setErrorMessage(
+            "Error logging in : Please check the console for more details"
+          );
+          console.error(error);
+          setTimeout(() => {
+            setErrorMessage("");
+          }, 5000);
+        }
       });
   };
 
-  if (user) { // Should this be removed?
+  if (user) {
+    // Should this be removed?
     return null;
   }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
+      <ErrorMessage errorMessage={errorMessage} />
       <Box
         sx={{
           marginTop: 8,
