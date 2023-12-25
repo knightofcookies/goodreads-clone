@@ -17,3 +17,5 @@ const userLoader = async () => {
 };
 
 export default userLoader;
+
+// TODO Decide if user state management using Context is vestigial

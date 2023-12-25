@@ -9,14 +9,12 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import loginService from "../services/login";
-import { useContext, useState } from "react";
-import UserContext from "../contexts/UserContext";
+import { useState } from "react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 
 export default function Login() {
   const { user } = useLoaderData();
-  const [, userDispatch] = useContext(UserContext);
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -39,10 +37,6 @@ export default function Login() {
     loginService
       .login(credentials)
       .then((user) => {
-        userDispatch({
-          type: "SET_USER",
-          payload: user,
-        });
         window.localStorage.setItem(
           "loggedGoodreadsUser",
           JSON.stringify(user)

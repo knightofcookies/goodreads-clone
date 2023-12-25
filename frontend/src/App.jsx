@@ -1,25 +1,13 @@
-import { useEffect, useContext } from "react";
-import UserContext from "./contexts/UserContext";
 import AppBar from "./components/AppBar";
-import { Outlet, useLoaderData } from "react-router-dom";
-
+import Container from "@mui/material/Container";
 
 function App() {
-  const { user } = useLoaderData();
-
-  const [, userDispatch] = useContext(UserContext);
-
-  useEffect(() => {
-    userDispatch({
-      type: "SET_USER",
-      payload: user,
-    });
-  }, [user, userDispatch]);
-
   return (
     <>
       <AppBar />
-      <Outlet />
+      <Container>
+        <p>This site is under construction.</p> {/* TODO Display home page text */}
+      </Container>
     </>
   );
 }

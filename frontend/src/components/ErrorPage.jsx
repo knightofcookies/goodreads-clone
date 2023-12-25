@@ -1,5 +1,7 @@
-import { Box, Button, Typography } from "@mui/material";
-import { blue } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import blue from "@mui/material/colors/blue";
 import { useRouteError, Link as RouterLink } from "react-router-dom";
 
 const primary = blue[500];

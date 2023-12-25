@@ -14,7 +14,6 @@ import MenuItem from "@mui/material/MenuItem";
 import BookIcon from "@mui/icons-material/Book";
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
-import UserContext from "../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
 const pages = [
@@ -32,13 +31,10 @@ const pages = [
   },
 ];
 
-// const settings = ["Profile", "Account", "Dashboard", "Logout"];
-
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const navigate = useNavigate();
-  const [, userDispatch] = React.useContext(UserContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -57,18 +53,17 @@ function ResponsiveAppBar() {
 
   const handleLogout = () => {
     window.localStorage.removeItem("loggedGoodreadsUser");
-    userDispatch({
-      type: "RESET_USER",
-    });
     navigate("/", { replace: true });
   };
 
-  const dummyHandler = () => {};
+  const handleMyBooks = () => {
+    navigate("/mybooks");
+  };
 
   const settings = [
     {
-      title: "Profile",
-      handler: dummyHandler,
+      title: "My Books",
+      handler: handleMyBooks,
     },
     {
       title: "Logout",
