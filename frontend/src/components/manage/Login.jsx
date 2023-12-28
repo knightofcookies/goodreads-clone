@@ -2,15 +2,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import loginService from "../services/login";
+import contributorsService from "../../services/contributors";
 import { useState } from "react";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import CustomThemeProvider from "./CustomThemeProvider";
 
@@ -34,15 +32,15 @@ const Login = () => {
       username,
       password,
     };
-    loginService
+    contributorsService
       .login(credentials)
-      .then((user) => {
+      .then((contributor) => {
         window.localStorage.setItem(
-          "loggedGoodreadsUser",
-          JSON.stringify(user)
+          "loggedGoodreadsContributor",
+          JSON.stringify(contributor)
         );
         setErrorMessage("");
-        navigate("/", { replace: true });
+        navigate("/manage", { replace: true });
       })
       .catch((error) => {
         if (error.response.data.error) {
@@ -79,7 +77,7 @@ const Login = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Login
+            Login as Contributor
           </Typography>
           <Box
             component="form"
@@ -115,18 +113,6 @@ const Login = () => {
             >
               Login
             </Button>
-            <Grid container>
-              {/* <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid> */}
-              <Grid item xs>
-                <Link component={RouterLink} to="/signup" variant="body2">
-                  {"Don't have an account? Sign Up"}
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
