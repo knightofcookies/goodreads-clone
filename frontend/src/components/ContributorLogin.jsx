@@ -6,13 +6,13 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import contributorsService from "../../services/contributors";
+import contributorsService from "../services/contributors";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ErrorMessage from "./ErrorMessage";
 import CustomThemeProvider from "./CustomThemeProvider";
 
-const Login = () => {
+const ContributorLogin = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -120,4 +120,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ContributorLogin;

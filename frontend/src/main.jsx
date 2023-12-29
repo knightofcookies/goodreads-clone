@@ -5,13 +5,17 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./components/ErrorPage.jsx";
 import Books from "./components/Books.jsx";
-import userLoader from "./utils/userLoader.js";
-import loginLoader from "./utils/loginLoader.js";
+import userLoader from "./loaders/userLoader.js";
+import loginLoader from "./loaders/loginLoader.js";
+import contributorLoader from "./loaders/contributorLoader.js";
+import contributorLoginLoader from "./loaders/contributorLoginLoader.js";
 import Login from "./components/Login.jsx";
 import Users from "./components/Users.jsx";
 import Contributors from "./components/Contributors.jsx";
 import MyBooks from "./components/MyBooks.jsx";
 import SignUp from "./components/SignUp.jsx";
+import ContributorLogin from "./components/ContributorLogin.jsx";
+import Manage from "./components/Manage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -55,6 +59,18 @@ const router = createBrowserRouter([
     element: <SignUp />,
     errorElement: <ErrorPage />,
     loader: loginLoader,
+  },
+  {
+    path: "/manage/login",
+    element: <ContributorLogin />,
+    errorElement: <ErrorPage />,
+    loader: contributorLoginLoader,
+  },
+  {
+    path: "/manage",
+    element: <Manage />,
+    errorElement: <ErrorPage />,
+    loader: contributorLoader,
   },
 ]);
 
