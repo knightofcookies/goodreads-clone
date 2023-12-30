@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import booksService from "../services/books";
-import AppBar from "./AppBar";
+import managementService from "../services/management";
+import ContributorAppBar from "./ContributorAppBar";
 import Container from "@mui/material/Container";
 import { useNavigate, useLoaderData } from "react-router-dom";
 import Box from "@mui/material/Box";
@@ -14,7 +14,7 @@ import Button from "@mui/material/Button";
 
 // TODO : Add error notifications
 
-const SelectedListItem = ({ books, removeBookFromShelf }) => {
+const SelectedListItem = ({ books, deleteBook }) => {
   const [selectedId, setSelectedId] = useState(0);
 
   const handleListItemClick = (event, id) => {
@@ -39,7 +39,7 @@ const SelectedListItem = ({ books, removeBookFromShelf }) => {
               <Button
                 variant="contained"
                 color="secondary"
-                onClick={() => removeBookFromShelf(book.id)}
+                onClick={() => deleteBook(book.id)}
               >
                 Remove
               </Button>
@@ -51,15 +51,15 @@ const SelectedListItem = ({ books, removeBookFromShelf }) => {
   );
 };
 
-const MyBooks = () => {
+const MyContributions = () => {
   const [books, setBooks] = useState([]);
-  const { user } = useLoaderData();
+  const { contributor } = useLoaderData();
   const navigate = useNavigate();
 
-  const removeBookFromShelf = async (id) => {
-    booksService.setToken(user.token);
+  const deleteBook = async (id) => {
+    managementService.setToken(contributor.token);
     try {
-      await booksService.removeFromShelf(id);
+      await managementService.deleteBook(id);
       setBooks(books.filter((b) => b !== id));
     } catch (exception) {
       console.error(exception); // TODO Handle errors
@@ -67,42 +67,39 @@ const MyBooks = () => {
   };
 
   useEffect(() => {
-    if (!user) {
+    if (!contributor) {
       return;
     }
-    booksService.setToken(user.token);
-    booksService
-      .getBookshelf()
-      .then((returnedUser) => {
-        if (returnedUser) {
-          setBooks(returnedUser.books);
+    managementService.setToken(contributor.token);
+    managementService
+      .getContributions()
+      .then((returnedContributor) => {
+        if (returnedContributor) {
+          setBooks(returnedContributor.contributions);
         }
       })
       .catch((error) => {
         if (error.response) {
           if (error.response.status === 401) {
-            window.localStorage.removeItem("loggedGoodreadsUser");
+            window.localStorage.removeItem("loggedGoodreadsContributor");
             navigate("/login", { replace: true });
           }
         }
       });
-  }, [user, navigate]);
+  }, [contributor, navigate]);
 
   return (
     <CustomThemeProvider>
-      <AppBar />
+      <ContributorAppBar />
       <Container sx={{ p: 1 }}>
         <Typography variant="h4" component="h4">
-          My Books
+          My Contributions
         </Typography>
         <Divider />
-        <SelectedListItem
-          books={books}
-          removeBookFromShelf={removeBookFromShelf}
-        />
+        <SelectedListItem books={books} deleteBook={deleteBook} />
       </Container>
     </CustomThemeProvider>
   );
 };
 
-export default MyBooks;
+export default MyContributions;

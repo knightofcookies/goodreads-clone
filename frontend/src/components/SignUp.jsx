@@ -44,13 +44,9 @@ export default function SignUp() {
     };
     userService
       .createUser(credentials)
-      .then((user) => {
-        window.localStorage.setItem(
-          "loggedGoodreadsUser",
-          JSON.stringify(user)
-        );
+      .then(() => {
         setErrorMessage("");
-        navigate("/", { replace: true });
+        navigate("/login", { replace: true });
       })
       .catch((error) => {
         if (error.response.data.error) {
@@ -118,7 +114,7 @@ export default function SignUp() {
               margin="normal"
               required
               fullWidth
-              name="password"
+              name="confirm-password"
               label="Confirm Password"
               type="password"
               id="confirm-password"
@@ -135,7 +131,7 @@ export default function SignUp() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link component={RouterLink} to="/login" variant="body2">
-                  {"Have an account? Login" /* TODO Add login */}
+                  {"Have an account? Login"}
                 </Link>
               </Grid>
             </Grid>

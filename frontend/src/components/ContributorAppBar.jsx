@@ -16,20 +16,14 @@ import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-// TODO
-
 const pages = [
   {
-    title: "Books",
-    endpoint: "books",
+    title: "Add",
+    endpoint: "manage/add",
   },
   {
-    title: "Users",
-    endpoint: "users",
-  },
-  {
-    title: "Contributors",
-    endpoint: "contributors",
+    title: "Delete",
+    endpoint: "manage/delete",
   },
 ];
 
@@ -54,18 +48,18 @@ const ResponsiveContributorAppBar = () => {
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem("loggedGoodreadsUser");
-    navigate("/", { replace: true });
+    window.localStorage.removeItem("loggedGoodreadsContributor");
+    navigate("/manage", { replace: true });
   };
 
-  const handleMyBooks = () => {
-    navigate("/mybooks");
+  const handleMyContributions = () => {
+    navigate("/manage/mycontributions"); // TODO
   };
 
   const settings = [
     {
-      title: "My Books",
-      handler: handleMyBooks,
+      title: "My Contributions",
+      handler: handleMyContributions,
     },
     {
       title: "Logout",
@@ -82,7 +76,7 @@ const ResponsiveContributorAppBar = () => {
             variant="h6"
             noWrap
             component={RouterLink}
-            to="/"
+            to="/manage"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -143,7 +137,7 @@ const ResponsiveContributorAppBar = () => {
             variant="h5"
             noWrap
             component={RouterLink}
-            to="/"
+            to="/manage"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },

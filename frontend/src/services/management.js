@@ -23,4 +23,9 @@ const deleteBook = async (id) => {
   await axios.delete(`${baseUrl}/${id}`, config);
 };
 
-export default { setToken, createBook, deleteBook };
+const getContributions = async () => {
+  const response = await axios.get(`${baseUrl}/mycontributions`, config);
+  return response.data;
+};
+
+export default { setToken, createBook, deleteBook, getContributions };

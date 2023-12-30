@@ -16,6 +16,10 @@ import MyBooks from "./components/MyBooks.jsx";
 import SignUp from "./components/SignUp.jsx";
 import ContributorLogin from "./components/ContributorLogin.jsx";
 import Manage from "./components/Manage.jsx";
+import AddBook from "./components/AddBook.jsx";
+import DeleteBook from "./components/DeleteBook.jsx";
+import ManageErrorPage from "./components/ManageErrorPage.jsx";
+import MyContributions from "./components/MyContributions.jsx";
 
 const router = createBrowserRouter([
   {
@@ -63,13 +67,31 @@ const router = createBrowserRouter([
   {
     path: "/manage/login",
     element: <ContributorLogin />,
-    errorElement: <ErrorPage />,
+    errorElement: <ManageErrorPage />,
     loader: contributorLoginLoader,
   },
   {
     path: "/manage",
     element: <Manage />,
-    errorElement: <ErrorPage />,
+    errorElement: <ManageErrorPage />,
+    loader: contributorLoader,
+  },
+  {
+    path: "/manage/add",
+    element: <AddBook />,
+    errorElement: <ManageErrorPage />,
+    loader: contributorLoader,
+  },
+  {
+    path: "/manage/delete",
+    element: <DeleteBook />,
+    errorElement: <ManageErrorPage />,
+    loader: contributorLoader,
+  },
+  {
+    path: "/manage/mycontributions",
+    element: <MyContributions />,
+    errorElement: <ManageErrorPage />,
     loader: contributorLoader,
   },
 ]);

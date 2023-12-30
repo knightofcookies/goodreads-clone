@@ -48,4 +48,21 @@ managementRouter.delete("/:id", async (req, res) => {
   res.status(204).end();
 });
 
+managementRouter.get("/mycontributions", async (req, res) => {
+  const librarian = req.librarian;
+  
+  if (!librarian) {
+    return res.status(401).json({
+      error: `you must be logged in as a contributor`,
+    });
+  }
+
+  const contributions = await Librarian.findById(librarian.id).populate("contributions", [
+    "title",
+    "author",
+  ]);
+  
+  res.json(contributions);
+});
+
 module.exports = managementRouter;
