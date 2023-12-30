@@ -92,7 +92,7 @@ const MyContributions = () => {
     <CustomThemeProvider>
       <ContributorAppBar />
       <Container sx={{ p: 1 }}>
-        <Typography variant="h4" component="h4">
+        <Typography variant="h5" component="h5">
           My Contributions
         </Typography>
         <Divider />
